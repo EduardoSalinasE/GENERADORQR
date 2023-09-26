@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Códigos QR con Margen y Fondo Blanco</title>
+    <!-- Incluye la biblioteca qrcode.js -->
+    <script src="qr/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Generador de Códigos QR</h1>
+    <label for="urlInput">Introduce un enlace:</label>
+    <input type="text" id="urlInput">
+    <br>
+    <button onclick="generarCodigoQR()">Generar QR</button>
+    <br>
+    <br>
+    <br>
+    <div id="qrcode"></div>
+    <br>
+    <a id="downloadLink" style="display: none;">Descargar QR</a>
+
+    <script>
+        function generarCodigoQR() {
+            const urlInput = document.getElementById("urlInput").value;
+            const qrcodeDiv = document.getElementById("qrcode");
+            const downloadLink = document.getElementById("downloadLink");
+
+            const qrcode = new QRCode(qrcodeDiv, {
+                text: urlInput,
+                width: 400, // Ancho del código QR
+                height: 400, // Altura del código QR
+                colorDark: "#000000", // Color de los elementos oscuros
+                colorLight: "#ffffff", // Color del fondo (blanco)
+                correctLevel: QRCode.CorrectLevel.H, // Nivel de corrección de errores
+                margin: 0.45 // Margen en pulgadas (0.25 pulgadas = 0.635 cm)
+            });
+
+            // Mostrar el enlace de descarga
+            downloadLink.href = qrcodeDiv.firstChild.toDataURL("image/png");
+            downloadLink.download = "codigo-qr.png";
+            downloadLink.style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
